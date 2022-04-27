@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-
-import '../database/appDatabase.dart';
+import 'package:flutter_cadastro/database/dao/ContactDAO.dart';
 import '../models/Contact.dart';
 import 'ContactForm.dart';
 
 class ContactsList extends StatelessWidget {
+  final ContactDAO _dao = ContactDAO();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +15,7 @@ class ContactsList extends StatelessWidget {
       body: FutureBuilder<List<Contact>>(
         initialData: List.empty(growable: true),
         //future: Future.delayed(Duration(seconds: 1)).then((value) => findAll()),
-        future: findAll(),
+        future: _dao.findAll(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:

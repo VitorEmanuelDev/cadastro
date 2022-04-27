@@ -3,7 +3,7 @@ import 'package:flutter_cadastro/models/Contact.dart';
 import 'package:flutter_cadastro/screens/ContactsList.dart';
 import 'package:flutter_cadastro/screens/Dashboard.dart';
 
-import 'database/appDatabase.dart';
+import 'database/AppDatabase.dart';
 
 void main() {
   runApp(BancoDigio());
