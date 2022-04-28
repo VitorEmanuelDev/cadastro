@@ -3,7 +3,12 @@ import 'package:flutter_cadastro/database/dao/ContactDAO.dart';
 import '../models/Contact.dart';
 import 'ContactForm.dart';
 
-class ContactsList extends StatelessWidget {
+class ContactsList extends StatefulWidget {
+  @override
+  State<ContactsList> createState() => _ContactsListState();
+}
+
+class _ContactsListState extends State<ContactsList> {
   final ContactDAO _dao = ContactDAO();
 
   @override
@@ -14,8 +19,9 @@ class ContactsList extends StatelessWidget {
       ),
       body: FutureBuilder<List<Contact>>(
         initialData: List.empty(growable: true),
-        //future: Future.delayed(Duration(seconds: 1)).then((value) => findAll()),
-        future: _dao.findAll(),
+        future: Future.delayed(Duration(seconds: 1))
+            .then((value) => _dao.findAll()),
+        //future: _dao.findAll(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
