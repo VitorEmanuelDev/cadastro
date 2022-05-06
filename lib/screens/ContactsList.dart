@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cadastro/components/Progress.dart';
 import 'package:flutter_cadastro/database/dao/ContactDAO.dart';
 import '../models/Contact.dart';
 import 'ContactForm.dart';
@@ -28,16 +29,7 @@ class _ContactsListState extends State<ContactsList> {
               // TODO: Handle this case.
               break;
             case ConnectionState.waiting:
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(),
-                    Text('Loading'),
-                  ],
-                ),
-              );
+              return Progress();
               break;
             case ConnectionState.active:
               // TODO: Handle this case.

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cadastro/http/WebClient.dart';
 import 'package:flutter_cadastro/models/Contact.dart';
 import 'package:flutter_cadastro/screens/ContactsList.dart';
 import 'package:flutter_cadastro/screens/Dashboard.dart';
@@ -10,6 +11,8 @@ void main() {
   // save(Contact(0, 'Vitor', 23456)).then((id) {
   // findAll().then((contacts) => debugPrint(contacts.toString()));
   //});
+
+  findAll().then((transactions) => print('new transactions $transactions'));
 }
 
 class BancoDigio extends StatelessWidget {
