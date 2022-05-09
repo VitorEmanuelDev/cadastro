@@ -5,14 +5,13 @@ import 'package:flutter_cadastro/screens/ContactsList.dart';
 import 'package:flutter_cadastro/screens/Dashboard.dart';
 
 import 'database/AppDatabase.dart';
+import 'models/Transaction.dart';
 
 void main() {
   runApp(BancoDigio());
-  // save(Contact(0, 'Vitor', 23456)).then((id) {
-  // findAll().then((contacts) => debugPrint(contacts.toString()));
-  //});
-
-  findAll().then((transactions) => print('new transactions $transactions'));
+  //save(Transaction(500.0, Contact(0, 'teste', 2000)))
+  //  .then((transaction) => print(transaction));
+  // findAll().then((transactions) => print('new transactions $transactions'));
 }
 
 class BancoDigio extends StatelessWidget {

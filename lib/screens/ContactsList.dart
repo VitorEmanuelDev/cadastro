@@ -3,6 +3,7 @@ import 'package:flutter_cadastro/components/Progress.dart';
 import 'package:flutter_cadastro/database/dao/ContactDAO.dart';
 import '../models/Contact.dart';
 import 'ContactForm.dart';
+import 'TransactionForm.dart';
 
 class ContactsList extends StatefulWidget {
   @override
@@ -39,7 +40,16 @@ class _ContactsListState extends State<ContactsList> {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final Contact contact = contacts[index];
-                  return _ContactItem(contact);
+                  return _ContactItem(
+                    contact,
+                    onClick: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => TransactionForm(contact),
+                        ),
+                      );
+                    },
+                  );
                 },
                 itemCount: contacts != null ? contacts.length : 0,
               );
@@ -69,13 +79,15 @@ class _ContactsListState extends State<ContactsList> {
 
 class _ContactItem extends StatelessWidget {
   final Contact contact;
+  final Function onClick;
 
-  _ContactItem(this.contact);
+  _ContactItem(this.contact, {required this.onClick});
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        onTap: () => onClick(),
         title: Text(
           contact.name,
           style: TextStyle(
