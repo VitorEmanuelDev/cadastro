@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cadastro/components/TransactionAuthDialog.dart';
 import 'package:flutter_cadastro/http/WebClient.dart';
 import 'package:flutter_cadastro/models/Contact.dart';
 import 'package:flutter_cadastro/screens/ContactsList.dart';
 import 'package:flutter_cadastro/screens/Dashboard.dart';
+import 'package:uuid/uuid.dart';
 
 import 'database/AppDatabase.dart';
 import 'models/Transaction.dart';
@@ -28,6 +30,7 @@ class BancoDigio extends StatelessWidget {
             .copyWith(secondary: Colors.blueAccent[700]),
       ),
       home: Dashboard(),
+      // home: TransactionAuthDialog(),
     );
   }
 }

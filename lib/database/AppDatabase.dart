@@ -17,14 +17,12 @@ import 'package:sqflite/sqflite.dart';
 }*/
 
 Future<Database> getDatabase() async {
-  final String dbPath = await getDatabasesPath() as String;
-  final String path = join(dbPath, 'digioBank.db');
+  final String path = join(await getDatabasesPath(), 'digioBank.db');
   return openDatabase(
     path,
     onCreate: (db, version) {
       db.execute(ContactDAO.tableSql);
     },
     version: 1,
-    //onDowngrade: onDatabaseDowngradeDelete
   );
 }

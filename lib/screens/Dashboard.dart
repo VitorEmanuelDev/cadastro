@@ -24,14 +24,36 @@ class Dashboard extends StatelessWidget {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <Widget>[
-                _FeatureItem('Transfer', Icons.monetization_on,
-                    onClick: () => _showContactsList(context)),
-                _FeatureItem('Transaction Feed', Icons.description,
-                    onClick: () => _showTransactionsList(context)),
+                _FeatureItem(
+                  'Transfer',
+                  Icons.monetization_on,
+                  onClick: () => _showContactsList(context),
+                ),
+                _FeatureItem(
+                  'Transaction Feed',
+                  Icons.description,
+                  onClick: () => _showTransactionsList(context),
+                ),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showContactsList(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ContactsList(),
+      ),
+    );
+  }
+
+  _showTransactionsList(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => TransactionsList(),
       ),
     );
   }
@@ -42,9 +64,11 @@ class _FeatureItem extends StatelessWidget {
   final IconData icon;
   final Function onClick;
 
-  _FeatureItem(this.name, this.icon, {required this.onClick});
-  // : assert(icon != null),
-  //       assert(onClick != null);
+  _FeatureItem(
+    this.name,
+    this.icon, {
+    required this.onClick,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -56,8 +80,6 @@ class _FeatureItem extends StatelessWidget {
           onTap: () => onClick(),
           child: Container(
             padding: EdgeInsets.all(8.0),
-            //padding: EdgeInsets.fromLTRB(8, 8, 8, 36),
-            height: 100,
             width: 150,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -82,20 +104,4 @@ class _FeatureItem extends StatelessWidget {
       ),
     );
   }
-}
-
-void _showTransactionsList(BuildContext context) {
-  Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (context) => TransactionsList(),
-    ),
-  );
-}
-
-void _showContactsList(BuildContext context) {
-  Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (context) => ContactsList(),
-    ),
-  );
 }
