@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_cadastro/components/TransactionAuthDialog.dart';
-import 'package:flutter_cadastro/http/WebClient.dart';
-import 'package:flutter_cadastro/models/Contact.dart';
-import 'package:flutter_cadastro/screens/ContactsList.dart';
-import 'package:flutter_cadastro/screens/CounterPage.dart';
 import 'package:flutter_cadastro/screens/Dashboard.dart';
-import 'package:flutter_cadastro/screens/Name.dart';
-import 'package:uuid/uuid.dart';
 
 import 'components/Theme.dart';
-import 'database/AppDatabase.dart';
-import 'models/Transaction.dart';
 
 void main() {
-  runApp(BancoDigio());
-  //save(Transaction(500.0, Contact(0, 'teste', 2000)))
-  //  .then((transaction) => print(transaction));
-  // findAll().then((transactions) => print('new transactions $transactions'));
+  BlocOverrides.runZoned(
+    () {
+      runApp(BancoDigio());
+    },
+    blocObserver: LogBloc(),
+  );
+}
+
+class LogBloc extends BlocObserver {
+  @override
+  void onChange(BlocBase bloc, Change change) {
+    debugPrint('${bloc.runtimeType} > $change');
+    super.onChange(bloc, change);
+  }
 }
 
 class BancoDigio extends StatelessWidget {
@@ -25,7 +26,7 @@ class BancoDigio extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: digioBankTheme,
-      home: NameContainer(),
+      home: DashboardContainer(),
       // home: TransactionAuthDialog(),
     );
   }

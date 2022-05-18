@@ -1,17 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cadastro/components/Progress.dart';
 import 'package:flutter_cadastro/database/dao/ContactDAO.dart';
+import '../components/Container.dart';
 import '../models/Contact.dart';
 import 'ContactForm.dart';
 import 'TransactionForm.dart';
 
-class ContactsList extends StatefulWidget {
-  @override
-  _ContactsListState createState() => _ContactsListState();
+@immutable
+abstract class ContactsListState {
+  const ContactsListState();
 }
 
-class _ContactsListState extends State<ContactsList> {
-  final ContactDAO _dao = ContactDAO();
+@immutable
+class LoadingContactsListState extends ContactsListState {
+  const LoadingContactsListState();
+}
+
+@immutable
+class InitContactsListState extends ContactsListState {
+  const InitContactsListState();
+}
+
+@immutable
+class LoadedContactsListState extends ContactsListState {
+  final List<Contact> _contacts;
+
+  const LoadedContactsListState(this._contacts);
+}
+
+@immutable
+class FatalErrorContactsListState extends ContactsListState {
+  const FatalErrorContactsListState();
+}
+
+class ContactsListCubit extends Cubit<ContactsListState> {
+  ContactsListCubit() : super(InitContactsListState());
+
+  void reload(ContactDAO dao) async {
+    emit(LoadingContactsListState());
+    dao.findAll().then((contacts) => emit(LoadedContactsListState(contacts)));
+  }
+}
+
+class ContactsListContainer extends BlocContainer {
+  @override
+  Widget build(BuildContext context) {
+    final ContactDAO dao = ContactDAO();
+
+    return BlocProvider<ContactsListCubit>(
+      create: (BuildContext context) {
+        final cubit = ContactsListCubit();
+        cubit.reload(dao);
+        return cubit;
+      },
+      child: ContactsList(dao),
+    );
+  }
+}
+
+class ContactsList extends StatelessWidget {
+  final ContactDAO _dao;
+
+  ContactsList(this._dao);
 
   @override
   Widget build(BuildContext context) {
@@ -19,56 +70,56 @@ class _ContactsListState extends State<ContactsList> {
       appBar: AppBar(
         title: Text('Transfer'),
       ),
-      body: FutureBuilder<List<Contact>>(
-        initialData: List.empty(growable: true),
-        future: _dao.findAll(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-              break;
-            case ConnectionState.waiting:
-              return Progress();
-              break;
-            case ConnectionState.active:
-              break;
-            case ConnectionState.done:
-              final List<Contact>? contacts = snapshot.data;
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  final Contact contact = contacts![index];
-                  return _ContactItem(
-                    contact,
-                    onClick: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => TransactionForm(contact),
-                        ),
-                      );
-                    },
-                  );
-                },
-                itemCount: contacts?.length,
-              );
-              break;
+      body: BlocBuilder<ContactsListCubit, ContactsListState>(
+        builder: (context, state) {
+          if (state is InitContactsListState ||
+              state is LoadingContactsListState) {
+            return Progress();
           }
-          return Text('Unknown error');
+          if (state is LoadedContactsListState) {
+            final contacts = state._contacts;
+            return ListView.builder(
+              itemBuilder: (context, index) {
+                final contact = contacts[index];
+                return _ContactItem(
+                  contact,
+                  onClick: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => TransactionForm(contact),
+                      ),
+                    );
+                  },
+                );
+              },
+              itemCount: contacts.length,
+            );
+          }
+          return const Text('Unknown error');
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context)
-              .push(
-                MaterialPageRoute(
-                  builder: (context) => ContactForm(),
-                ),
-              )
-              .then((value) => setState(() {}));
-        },
-        child: Icon(
-          Icons.add,
-        ),
+      floatingActionButton: buildAddContactButton(context),
+    );
+  }
+
+  FloatingActionButton buildAddContactButton(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () async {
+        await Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => ContactForm(),
+          ),
+        );
+        update(context);
+      },
+      child: Icon(
+        Icons.add,
       ),
     );
+  }
+
+  void update(BuildContext context) {
+    context.read<ContactsListCubit>().reload(_dao);
   }
 }
 
