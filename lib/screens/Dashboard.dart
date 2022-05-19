@@ -12,7 +12,7 @@ class DashboardContainer extends BlocContainer {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => NameCubit("Guilherme"),
+      create: (_) => NameCubit("Vitor"),
       child: DashboardView(),
     );
   }
