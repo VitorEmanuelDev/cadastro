@@ -24,10 +24,10 @@ class NameView extends StatelessWidget {
         children: [
           TextField(
             controller: _nameController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: "Desired name",
             ),
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 24.0,
             ),
           ),
@@ -35,8 +35,8 @@ class NameView extends StatelessWidget {
             padding: const EdgeInsets.only(top: 16.0),
             child: SizedBox(
               width: double.maxFinite,
-              child: RaisedButton(
-                child: Text("Change"),
+              child: ElevatedButton(
+                child: const Text("Change"),
                 onPressed: () {
                   final name = _nameController.text;
                   context.read<NameCubit>().change(name);

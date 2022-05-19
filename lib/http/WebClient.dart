@@ -1,9 +1,6 @@
-import 'dart:convert';
-import 'package:flutter_cadastro/models/Transaction.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 
-import '../models/Contact.dart';
 import 'interceptors/LoggingInterceptor.dart';
 
 final Client client = InterceptedClient.build(

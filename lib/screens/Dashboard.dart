@@ -23,7 +23,6 @@ class DashboardView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // misturando um blocbuilder (que é um observer de eventos) com UI
         title: BlocBuilder<NameCubit, String>(
           builder: (context, state) => Text('Welcome $state'),
         ),
@@ -37,7 +36,7 @@ class DashboardView extends StatelessWidget {
             child: Image.asset('images/logodigio-1024x1024.png'),
           ),
           SingleChildScrollView(
-            child: Container(
+            child: SizedBox(
               height: 120,
               child: ListView(
                 scrollDirection: Axis.horizontal,
@@ -123,7 +122,7 @@ class _FeatureItem extends StatelessWidget {
                 ),
                 Text(
                   name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16.0,
                   ),

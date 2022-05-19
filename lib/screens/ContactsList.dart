@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_cadastro/components/Progress.dart';
+import 'package:flutter_cadastro/components/ProgressView.dart';
 import 'package:flutter_cadastro/database/dao/ContactDAO.dart';
 import '../components/Container.dart';
 import '../models/Contact.dart';
@@ -74,7 +74,7 @@ class ContactsList extends StatelessWidget {
         builder: (context, state) {
           if (state is InitContactsListState ||
               state is LoadingContactsListState) {
-            return Progress();
+            return ProgressView();
           }
           if (state is LoadedContactsListState) {
             final contacts = state._contacts;
@@ -84,11 +84,7 @@ class ContactsList extends StatelessWidget {
                 return _ContactItem(
                   contact,
                   onClick: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => TransactionForm(contact),
-                      ),
-                    );
+                    push(context, TransactionFormContainer(contact));
                   },
                 );
               },
@@ -139,13 +135,13 @@ class _ContactItem extends StatelessWidget {
         onTap: () => onClick(),
         title: Text(
           contact.name,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 24.0,
           ),
         ),
         subtitle: Text(
           contact.accountNumber.toString(),
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 16.0,
           ),
         ),

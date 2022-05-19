@@ -28,10 +28,10 @@ class _ContactFormState extends State<ContactForm> {
           children: <Widget>[
             TextField(
               controller: _nameController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Full name',
               ),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24.0,
               ),
             ),
@@ -39,10 +39,10 @@ class _ContactFormState extends State<ContactForm> {
               padding: const EdgeInsets.only(top: 8.0),
               child: TextField(
                 controller: _accountNumberController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Account number',
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24.0,
                 ),
                 keyboardType: TextInputType.number,
@@ -52,8 +52,8 @@ class _ContactFormState extends State<ContactForm> {
               padding: const EdgeInsets.only(top: 16.0),
               child: SizedBox(
                 width: double.maxFinite,
-                child: RaisedButton(
-                  child: Text('Create'),
+                child: ElevatedButton(
+                  child: const Text('Create'),
                   onPressed: () {
                     final String name = _nameController.text;
                     final int? accountNumber =

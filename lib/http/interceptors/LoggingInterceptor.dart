@@ -1,5 +1,3 @@
-import 'package:http/http.dart';
-import 'package:http_interceptor/http/intercepted_client.dart';
 import 'package:http_interceptor/http/interceptor_contract.dart';
 import 'package:http_interceptor/models/request_data.dart';
 import 'package:http_interceptor/models/response_data.dart';

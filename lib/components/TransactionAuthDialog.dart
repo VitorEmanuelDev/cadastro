@@ -26,8 +26,8 @@ class _TransactionAuthDialogState extends State<TransactionAuthDialog> {
           textAlign: TextAlign.center,
           //keyboardType: TextInputType.number,
           keyboardType: TextInputType.numberWithOptions(decimal: true),
-          style: TextStyle(fontSize: 32, letterSpacing: 16),
-          decoration: InputDecoration(
+          style: const TextStyle(fontSize: 32, letterSpacing: 16),
+          decoration: const InputDecoration(
             border: OutlineInputBorder(),
           ),
         ),

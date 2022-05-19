@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class Progress extends StatelessWidget {
+class ProgressView extends StatelessWidget {
   final String message;
 
-  Progress({this.message = 'Loading'});
+  ProgressView({this.message = 'Loading'});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class Progress extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          CircularProgressIndicator(),
+          const CircularProgressIndicator(),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: Text(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_cadastro/components/CenteredMessage.dart';
-import 'package:flutter_cadastro/components/Progress.dart';
+import 'package:flutter_cadastro/components/ProgressView.dart';
 import '../http/webclients/TransactionWebClient.dart';
 import '../models/Contact.dart';
 import '../models/Transaction.dart';
@@ -13,7 +13,7 @@ class TransactionsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Transactions'),
+        title: const Text('Transactions'),
       ),
       body: FutureBuilder<List<Transaction>>(
         future: _webClient.findAll(),
@@ -22,7 +22,7 @@ class TransactionsList extends StatelessWidget {
             case ConnectionState.none:
               break;
             case ConnectionState.waiting:
-              return Progress();
+              return ProgressView();
               break;
             case ConnectionState.active:
               break;
@@ -35,17 +35,17 @@ class TransactionsList extends StatelessWidget {
                       final Transaction transaction = transactions[index];
                       return Card(
                         child: ListTile(
-                          leading: Icon(Icons.monetization_on),
+                          leading: const Icon(Icons.monetization_on),
                           title: Text(
                             transaction.value.toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 24.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           subtitle: Text(
                             transaction.contact.accountNumber.toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16.0,
                             ),
                           ),
