@@ -33,7 +33,11 @@ class DashboardView extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Image.asset('images/logodigio-1024x1024.png'),
+            child: Image.asset(
+              'images/logodigio-1024x1024.png',
+              fit: BoxFit.contain,
+              width: 300,
+            ),
           ),
           SingleChildScrollView(
             child: SizedBox(
